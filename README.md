@@ -3,7 +3,9 @@
 Construindo uma Stack de Dados Moderna com Airbyte, Airflow, DBT & Snowflake na Prática!
 
 - Containers:
-    - MongoDB - VS Code extension, criados arquivos .mongodb para verificar os dados dos documentos
-    - Airbyte
-    - Airflow
-    - Metabase
+    - MongoDB x
+        - VS Code extension, criados arquivos .mongodb para verificar os dados dos documentos. Falta criar python script para criar tabela e carregar json pela command line
+    - Airbyte x
+    - Airflow x
+    - Metabase x
+    - MySQL 
