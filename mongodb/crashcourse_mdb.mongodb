@@ -3,7 +3,7 @@
 // mdb-shell-install.sh é o executável para rodar o mongodb shell, para isso foi transformado em execut e basta rodar o up
 // chmod +x seuarquivo 
 // ./seuarquivo up
-// mongodb/mdb-shell-install.sh up
+// mongodb/setup-mdbshell.sh up
 
 mongosh $MDB_CONNECTION_STRING;
 
