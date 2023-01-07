@@ -14,13 +14,7 @@ case $1 in
   up)
     up
     ;;
-  config)
-    config
-    ;;
-  down)
-    down
-    ;;
   *)
-    echo "Usage: $0 {up|config|down}"
+    echo "Usage: $0 {up}"
     ;;
 esac
