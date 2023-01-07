@@ -29,3 +29,5 @@ Construindo uma Stack de Dados Moderna com Airbyte, Airflow, DBT & Snowflake na 
     - Conectar o destino no snowflake
     - Criar as conexões do airbyte associando as origens ao destino
     - Testar conexões
+
+- Metabase dashboard to slack
