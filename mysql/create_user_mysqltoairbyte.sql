@@ -1,3 +1,4 @@
+-- criação do user pro airbyte com read-only access
 mysql -u root -p db;
 
 CREATE USER 'AIRBYTE_USER'@'%' IDENTIFIED BY 'your_password_here';
