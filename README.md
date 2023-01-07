@@ -25,6 +25,7 @@ Construindo uma Stack de Dados Moderna com Airbyte, Airflow, DBT & Snowflake na 
 - Extração no airbyte
     - Conectar origens - MongoDB e MySQL
     - Criar as entidades no snowflake através do script base da documentação
+    - Create a dedicated read-only Airbyte user with access to all tables needed for replication
     - Conectar o destino no snowflake
     - Criar as conexões do airbyte associando as origens ao destino
     - Testar conexões
