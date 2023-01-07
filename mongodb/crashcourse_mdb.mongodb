@@ -73,3 +73,137 @@ db.users.find().skip(1).limit(2)
   },
   { _id: ObjectId("63b98cf710621a7e6e9b49be"), name: 'Jill' }
 ]
+
+// criando filtros de linha
+db.users.find({ name: "Kyle" })
+db.users.find({ age: 26 })
+
+// criando filtros de coluna, ficando somente as com valor = 1
+db.users.find({ name: "Kyle" }, { name: 1, age: 1})
+[ { _id: ObjectId("63b98e1610621a7e6e9b49c0"), name: 'Kyle' } ]
+
+// se não quiser que retorne o id, basta colocar igual a 0
+db.users.find({ name: "Kyle" }, { name: 1, age: 1, _id: 0})
+[ { name: 'Kyle', age: 26 } ]
+
+// se quiser remover determinadas colunas, basta colocar igual a 0
+db.users.find({ name: "Kyle" }, { name: 0})
+[
+  {
+    _id: ObjectId("63b98e1610621a7e6e9b49c0"),
+    age: 26,
+    hobbies: [ 'Weight Lifting', 'Bowling' ],
+    address: { street: '987 North St', city: 'New York City' }
+  }
+]
+
+// trazer campos iguais a determinado valor $eq -equal- e diferente de algum valor $ne -not equal
+db.users.find({ name: { $eq: "Sally"}}, { name: 1, _id:0 })
+[ { name: 'Sally' } ]
+db.users.find({ name: { $ne: "Sally"}}, { name: 1, _id:0 })
+[
+  { name: 'John' },
+  { name: 'Jill' },
+  { name: 'Mike' },
+  { name: 'Kyle' },
+  { name: 'Billy' }
+]
+
+// maior = $gt - greater than - e $gte - greater and equal
+db.users.find({ age: { $gt: 13}}, {name:1, age:1, _id:0})
+[
+  { name: 'Sally', age: 19 },
+  { name: 'Kyle', age: 26 },
+  { name: 'Billy', age: 41 }
+]
+
+// menor = $lt - less than - e $lte - less than and equal
+db.users.find({ age: { $lte: 26}}, {name:1, age:1, _id:0})
+[ { name: 'Sally', age: 19 }, { name: 'Kyle', age: 26 } ]
+
+// in = $in or not in = $nin
+db.users.find({ name: { $in: ["Kyle", "Sally"]}}, {name:1, age:1, _id:0})
+[ { name: 'Sally', age: 19 }, { name: 'Kyle', age: 26 } ]
+
+// exists = True or False, mesmo se tiver um valor null é True
+db.users.find({ age: { $exists:true}}, {name:1, age:1, _id:0})
+[
+  { name: 'Sally', age: 19 },
+  { name: 'Kyle', age: 26 },
+  { name: 'Billy', age: 41 }
+]
+
+db.users.find({ age: { $exists:false}}, {name:1, age:1, _id:0})
+[ { name: 'John' }, { name: 'Jill' }, { name: 'Mike' } ]
+
+// inserir null value
+db.users.insertOne({ age:null, name: "Bill"})
+
+//maior e menor juntos
+db.users.find({ age: { $gte:20, $lte:40 }})
+[
+  {
+    _id: ObjectId("63b98e1610621a7e6e9b49c0"),
+    name: 'Kyle',
+    age: 26,
+    hobbies: [ 'Weight Lifting', 'Bowling' ],
+    address: { street: '987 North St', city: 'New York City' }
+  }
+]
+
+// maior, menor e name equal
+db.users.find({ age: { $gte:20, $lte:40 }, name: "Kyle"})
+
+
+// $and e $or
+db.users.find({ $and: [{ age:26}, {name:"Kyle"}]})
+db.users.find({ $or: [{ age: { $lte: 20}}, {name:"Kyle"}]}, {name:1, age:1, _id:0})
+
+[ { name: 'Sally', age: 19 }, { name: 'Kyle', age: 26 } ]
+
+// $not - age not greater or equal than 20 or name equal Kyle
+db.users.find({ $or: [{ age: { $not: { $gte: 20}}}, {name:"Kyle"}]}, {name:1, age:1, _id:0})
+
+// insertMany - inserir vários documents
+db.users.insertMany([{ name: "Tom", balance: 100, dbt: 200 }, { name: "Kristin", balance: 20, dbt: 0 }])
+
+// expression = coluna calculada ou comparação - $dbt is greater than $balance
+db.users.find({ $expr: { $gt: ["$dbt", "$balance"]}})
+
+// para acessar diferentes níveis nos documents
+db.users.find({ "address.street": "987 North St"})
+
+// firstOne - encontrar o primeiro document = limit 1
+db.users.findOne({ age: { $lte: 40}}) find
+
+// count documents
+db.users.countDocuments({ age: { $lte: 40}})
+
+// update a field - campos com age 26 set a new age 27
+db.users.updateOne({age: 26}, { $set: { age:27}})
+
+// update a field with a _id information
+db.users.updateOne({_id: ObjectId("63b9dbbcfc077ef943c39cbc")}, { $set: { age:20}})
+
+// increment $inc - idade +3
+db.users.updateOne({_id: ObjectId("63b9dbbcfc077ef943c39cbc")}, { $inc: { age:3}})
+
+// remane = $renamce
+db.users.updateOne({_id: ObjectId("63b9dbbcfc077ef943c39cbc")}, { $renamce: { name:"new_name"}})
+
+// $unset remove completamente o campo, não deixando nem o null
+db.users.updateOne({_id: ObjectId("63b9dbbcfc077ef943c39cbc")}, { $unset: { age:""}})
+
+// $push para incluir um determinado valor em uma lista
+db.users.updateOne({_id: ObjectId("63b98e1610621a7e6e9b49c0")}, { $push: { hobbies:"Swimming"}})
+
+// $pull para remover um valor em uma lista
+db.users.updateOne({_id: ObjectId("63b98e1610621a7e6e9b49c0")}, { $pull: { hobbies:"Swimming"}})
+
+// update many documents - todos os campos sem age, incluir como null
+db.users.updateMany({ age: { $exists: false}}, { $set: { age: null}} )
+
+// delete one and many - deletar um document
+db.users.deleteOne({ name: "John"})
+
+db.users.deleteMany({ age: { $exists: false}})
