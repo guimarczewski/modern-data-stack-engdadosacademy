@@ -8,4 +8,4 @@ Construindo uma Stack de Dados Moderna com Airbyte, Airflow, DBT & Snowflake na 
     - Airbyte x
     - Airflow x
     - Metabase x
-    - MySQL 
+    - MySQL - https://geshan.com.np/blog/2021/12/docker-postgres/ - Shell do container e "mysql -u root -p db"
