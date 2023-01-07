@@ -1,0 +1,70 @@
+// https://www.youtube.com/watch?v=ofme2o29ngU - 10:57
+
+mongosh
+
+show dbs
+
+use dbmds //se não tiver um database com esse nome, será criado
+
+show collections
+
+db.dropDatabase()
+
+// criando db, collection and a document
+use appdb
+db.users.insertOne({ name: "John"})
+
+// showing collection data
+db.users.find()
+
+db.users.insertOne({ name: "Sally", age: 19, address: { street: "987 North St"}, hobbies: ["Running"]})
+
+// insert many documents
+db.users.insertMany([{ name: "Jill"}, { name: "Mike"}])
+
+//name: "Kyle", age: 26, hobbies: ["Weight Lifting", "Bowling"], address: { street: "987 North St", city: "New York City"}
+//name: "Billy", age: 41, hobbies: ["Swimming", "Bowling"], address: { street: "442 South St", city: "New York City"}
+
+db.users.insertMany([{ name: "Kyle", age: 26, hobbies: ["Weight Lifting", "Bowling"], address: { street: "987 North St", city: "New York City"}}, { name: "Billy", age: 41, hobbies: ["Swimming", "Bowling"], address: { street: "442 South St", city: "New York City"}}])
+
+// using limit
+db.users.find().limit(2)
+
+// using sort: 1 asc, -1 desc
+db.users.find().sort({ name:1 }).limit(2)
+db.users.find().sort({ name:-1 }).limit(2)
+
+// if a camp is null, it's like zero in sort
+db.users.find().sort({ age:1, name:-1 }).limit(2)
+
+[
+  { _id: ObjectId("63b98cf710621a7e6e9b49bf"), name: 'Mike' },
+  { _id: ObjectId("63b98b9710621a7e6e9b49bc"), name: 'John' }
+]
+
+// using skip
+db.users.find().limit(2)
+
+[
+  { _id: ObjectId("63b98b9710621a7e6e9b49bc"), name: 'John' },
+  {
+    _id: ObjectId("63b98c5810621a7e6e9b49bd"),
+    name: 'Sally',
+    age: 19,
+    address: { street: '987 North St' },
+    hobbies: [ 'Running' ]
+  }
+]
+
+db.users.find().skip(1).limit(2)
+
+[
+  {
+    _id: ObjectId("63b98c5810621a7e6e9b49bd"),
+    name: 'Sally',
+    age: 19,
+    address: { street: '987 North St' },
+    hobbies: [ 'Running' ]
+  },
+  { _id: ObjectId("63b98cf710621a7e6e9b49be"), name: 'Jill' }
+]
