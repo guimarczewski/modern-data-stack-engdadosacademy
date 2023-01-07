@@ -10,7 +10,7 @@ Construindo uma Stack de Dados Moderna com Airbyte, Airflow, DBT & Snowflake na 
     - Metabase - para conectar o mysql no metabase, o host é o nome do container, após criação da network
     - MySQL - https://geshan.com.np/blog/2021/12/docker-postgres/ - Shell do container e "mysql -u root -p db", arquivo "demographics table.sql"
 
-- Criação Docker Network:
+- Criação Docker Network e inclusão do metabase e mysql:
     - docker network create modern-data-stack
     - docker network connect modern-data-stack metabase-metabase-app-1
     - docker network connect modern-data-stack mysql-db-1

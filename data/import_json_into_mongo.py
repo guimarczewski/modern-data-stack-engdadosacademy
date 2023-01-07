@@ -2,7 +2,7 @@ import pymongo
 import json
 from pymongo import MongoClient, InsertOne
 
-client = pymongo.MongoClient(r"mongodb+srv://root:Marczewsk1@owshq-mongodb-ws.fycylhb.mongodb.net/test")
+client = pymongo.MongoClient(r"mongodb+srv://<username>:<password>@owshq-mongodb-ws.fycylhb.mongodb.net/test")
 db = client.dbmds
 collection = db.stripe
 requesting = []
